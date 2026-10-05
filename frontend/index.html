@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPredict | Clinical ML Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="brand-icon">✚</span>
+                <span class="brand-name">HealthPredict</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#dashboard" class="nav-link active" data-target="dashboard">Dashboard</a></li>
+                <li><a href="#patients" class="nav-link" data-target="patients">Patients</a></li>
+                <li><a href="#predict" class="nav-link" data-target="predict">Predict</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="page active">
+            <header class="page-header">
+                <h1>Clinical Dashboard</h1>
+                <p class="subtitle">Real-time overview of patient population risk metrics.</p>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Patients</span>
+                    <span class="stat-value" id="total-patients">1,284</span>
+                    <div class="stat-trend positive">↑ 12% this month</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Average Risk Score</span>
+                    <span class="stat-value" id="avg-risk">42%</span>
+                    <div class="stat-trend neutral">Stable</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Pending Reviews</span>
+                    <span class="stat-value" id="pending-reviews">24</span>
+                    <div class="stat-trend negative">↑ 4 urgent</div>
+                </div>
+            </div>
+
+            <div class="visuals-container">
+                <div class="chart-card">
+                    <h3>Risk Distribution</h3>
+                    <div class="mock-chart">
+                        <div class="chart-row">
+                            <span class="row-label">Low Risk</span>
+                            <div class="bar-bg"><div class="bar-fill low" style="width: 65%"></div></div>
+                            <span class="row-value">65%</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="row-label">Medium Risk</span>
+                            <div class="bar-bg"><div class="bar-fill medium" style="width: 25%"></div></div>
+                            <span class="row-value">25%</span>
+                        </div>
+                        <div class="chart-row">
+                            <span class="row-label">High Risk</span>
+                            <div class="bar-bg"><div class="bar-fill high" style="width: 10%"></div></div>
+                            <span class="row-value">10%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Patients Section -->
+        <section id="patients" class="page">
+            <header class="page-header">
+                <h1>Patient Management</h1>
+                <p class="subtitle">Search and manage patient records across the facility.</p>
+            </header>
+
+            <div class="table-controls">
+                <div class="search-box">
+                    <input type="text" id="patient-search" placeholder="Search by name or ID...">
+                </div>
+                <div class="pagination-controls">
+                    <button id="prev-page" class="btn-secondary">Previous</button>
+                    <span id="page-indicator">Page 1</span>
+                    <button id="next-page" class="btn-secondary">Next</button>
+                </div>
+            </div>
+            </div>
+
+            <div class="table-container">
+                <table class="patient-table">
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Risk Level</th>
+                            <th>Last Visit</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patient-list">
+                        <!-- Data injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Predict Section -->
+        <section id="predict" class="page">
+            <header class="page-header">
+                <h1>ML Prediction Engine</h1>
+                <p class="subtitle">Input clinical metrics to generate health risk predictions.</p>
+            </header>
+
+            <div class="prediction-grid">
+                <div class="form-card">
+                    <form id="prediction-form">
+                        <div class="form-group">
+                            <label for="age">Patient Age</label>
+                            <input type="number" id="age" name="age" placeholder="e.g. 45" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bmi">BMI</label>
+                                <input type="number" step="0.1" id="bmi" name="bmi" placeholder="e.g. 24.5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bp">Blood Pressure (Systolic)</label>
+                                <input type="number" id="bp" name="bp" placeholder="e.g. 120" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="glucose">Glucose Level (mg/dL)</label>
+                            <input type="number" id="glucose" name="glucose" placeholder="e.g. 90" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Run Prediction</button>
+                    </form>
+                </div>
+
+                <div class="result-card" id="result-display">
+                    <div class="result-placeholder">
+                        <div class="placeholder-icon">⚙️</div>
+                        <p>Enter patient metrics and run prediction to see results.</p>
+                    </div>
+                    <div class="result-content hidden">
+                        <h3>Prediction Result</h3>
+                        <div class="risk-badge" id="risk-badge">Medium Risk</div>
+                        <div class="risk-score" id="risk-score">45% Probability</div>
+                        <p class="risk-description" id="risk-desc">The patient shows moderate risk indicators. Follow-up screening is recommended.</p>
+                        <button class="btn-secondary" onclick="resetPrediction()">Clear Result</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
